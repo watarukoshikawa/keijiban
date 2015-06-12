@@ -2,18 +2,23 @@
 
 APP::uses('AppController', 'Controller');
 
-class ThreadController extends AccountController{
+class ThreadController extends AppController{
 	// 各ページの表示
 	// スレッド一覧取得処理
 	// 削除処理
 	// スレッド登録処理
 
+	//GETを変数に保持
+
+
 	//thread一覧ページ
 	public function thread(){
-		//DBからスレッド取得
-		$this->loadModel('thread');
 
-		$res = $this->threads_tbs->find('all');
+
+		//DBからスレッド取得
+		$this->loadModel('thread_tb');
+
+		$res = $this->thread_tb->find('all');
 		$this->set('threads', $res);  //$thredsにスレッド一覧を格納
 
 		//thread.ctp表示
@@ -29,13 +34,13 @@ class ThreadController extends AccountController{
 	//スレッド削除処理
 	public function run_thread_delete(){
 
-		$this->loadModel('users');
+		$this->loadModel('thread_tb');
 
 		$delete_date = $this->request->data;
 
 		//DELETE
 		//account_idが投稿者と一致した場合のみのif文
-		$this->users->deleteAll(array('id' => $delete_date['delete_id']));
+		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_id']));
 
 		// 削除後threadにリダイレクト
 		$this->redirect('thread');
@@ -44,25 +49,27 @@ class ThreadController extends AccountController{
 	//スレッド登録処理
 	public function run_thread_regist(){
 
-		$this->loadModel('thread');
+		$this->loadModel('thread_tb');
 
 		//登録フォームのPOSTデータ取得
 		$insert_data = $this->request->data;
 
 		//INSERT
-		$this->users->set(
+		$this->thread_tb->set(
 				array(
 					'title' => $insert_data['regist_thread_title'],
 					'pass' => $insert_data['regist_thread_text'],
-					'date' => date('Y-m-d H:i:s')]
+					'date' => date('Y-m-d H:i:s'),
 					'account_id' => $insert_data['account_id']
 					)
 		);
-		$this->users->save();
+		$this->thread_tb->save();
 
 		// 登録後threadにリダイレクト
 		$this->redirect('thread');
 	}
+
+
 }
 
  ?>
