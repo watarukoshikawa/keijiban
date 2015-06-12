@@ -5,7 +5,6 @@ APP::uses('AppController', 'Controller');
 class AccountController extends AppController{
 
 
-
 	public function login(){
 
 		$this->render('login');
@@ -13,7 +12,7 @@ class AccountController extends AppController{
 
 	//ログイン処理
 	public function run_login(){
-	$this->loadModel('account_tbs');
+		$this->loadModel('account_tbs');
 
 		$login_data = $this->request->data;
 
@@ -31,7 +30,8 @@ class AccountController extends AppController{
 			if ($res > 0) {	//ログイン成功
 				//成功時にaccount_idを渡す。
 				$input_id = $login_data['login_id'];
-				$this->thread($input_id);
+
+				$this->redirect('../Thread/thread?account_id='.$input_id);
 
 			}else {	//ログイン失敗
 				$this->redirect('login');
