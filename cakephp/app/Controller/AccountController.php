@@ -4,6 +4,8 @@ APP::uses('AppController', 'Controller');
 
 class AccountController extends AppController{
 
+
+
 	public function login(){
 
 		$this->render('login');
@@ -27,10 +29,14 @@ class AccountController extends AppController{
 			$res = $this->users->find('count', $where);
 
 			if ($res > 0) {	//ログイン成功
-				
+				//成功時にaccount_idを渡す。
+				$input_id = $login_data['login_id'];
+				$this->thread($input_id);
+
 			}else {	//ログイン失敗
 				$this->redirect('login');
 			}
 		}
 
 	}
+}
