@@ -31,7 +31,7 @@ class AccountController extends AppController{
 				//成功時にaccount_idを渡す。
 				$input_id = $login_data['login_id'];
 
-				$this->redirect('../Thread/thread?'.$input_id);
+				$this->redirect('../Thread/thread?account_id='.$input_id);
 
 			}else {	//ログイン失敗
 				$this->redirect('login');
