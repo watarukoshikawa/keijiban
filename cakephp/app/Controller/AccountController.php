@@ -13,7 +13,7 @@ class AccountController extends AppController{
 
 	//ログイン処理
 	public function run_login(){
-	$this->loadModel('users');
+	$this->loadModel('account_tbs');
 
 		$login_data = $this->request->data;
 
@@ -26,7 +26,7 @@ class AccountController extends AppController{
 
 			//SELECT
 			//COUNT関数で一件以上あればログイン成功
-			$res = $this->users->find('count', $where);
+			$res = $this->account_tbs->find('count', $where);
 
 			if ($res > 0) {	//ログイン成功
 				//成功時にaccount_idを渡す。
