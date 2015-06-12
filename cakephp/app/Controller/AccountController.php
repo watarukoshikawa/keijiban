@@ -23,13 +23,15 @@ class AccountController extends AppController{
 				'conditions' => array('id' => $login_data['login_id'], 'pass' => $login_data['login_pass'])
 			);
 
+
 			//SELECT
 			//COUNT関数で一件以上あればログイン成功
-			$res = $this->account_tbs->find('count', $where);
-
-			if ($res > 0) {	//ログイン成功
+			$res = $this->account_tbs->find('first', $where);
+			if (count($res) > 0) {	//ログイン成功
 				//成功時にaccount_idを渡す。
 				$input_id = $login_data['login_id'];
+				CakeSession::write('account_id', $res['account_tbs']['id']);
+				CakeSession::write('account_name', $res['account_tbs']['name']);
 
 				$this->redirect('../Thread/thread?account_id='.$input_id);
 
