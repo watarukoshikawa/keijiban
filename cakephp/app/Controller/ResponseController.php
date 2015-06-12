@@ -7,6 +7,7 @@ class ResponseController extends AppController{
 	public function show_main(){
 		$this->loadModel('Response_tb');
 		$get_id = $this->params['url'];
+		var_dump($get_id);
 		$sql = "	
 					SELECT 
 						account_tbs.name ,
@@ -34,6 +35,7 @@ class ResponseController extends AppController{
 						WHERE thread_id = ".$get_id['thread_id'].") AS get_thread 
 					ON 
 						get_thread.account_id = account_tbs.id
+					ORDER BY response_date ASC
 				";
 
 		var_dump($sql);
