@@ -2,6 +2,6 @@
 
 APP::uses('AppModel', 'Model');
 
-class UserModel extends AppModel{
+class ThreadModel extends AppModel{
 
 }

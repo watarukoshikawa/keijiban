@@ -2,6 +2,6 @@
 
 APP::uses('AppModel', 'Model');
 
-class UserModel extends AppModel{
+class AccountModel extends AppModel{
 
 }
