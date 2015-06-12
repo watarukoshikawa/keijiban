@@ -7,15 +7,17 @@ class ThreadController extends AppController{
 	// スレッド一覧取得処理
 	// 削除処理
 	// スレッド登録処理
-
-	//GETを変数に保持
+	// セッションでページ管理
 
 
 	//thread一覧ページ
 	public function thread(){
 
-		$insert_id = $this->request->query;
-		$this->set('account_id',$insert_id['account_id']);
+		//セッション
+		$account_name = CakeSession::read('account_name');
+		$account_id = CakeSession::read('account_id');
+		$this->set('account_name', $account_name);
+		$this->set('account_id', $account_id);
 
 		//DBからスレッド取得
 		$this->loadModel('thread_tb');
@@ -42,7 +44,6 @@ class ThreadController extends AppController{
 		$delete_date = $this->request->data;
 
 		//DELETE
-		//account_idが投稿者と一致した場合のみのif文
 		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_id']));
 
 		// 削除後threadにリダイレクト
@@ -57,13 +58,18 @@ class ThreadController extends AppController{
 		//登録フォームのPOSTデータ取得
 		$insert_data = $this->request->data;
 
+		//登録しようとしているユーザーのセッションを取得
+		$account_name = CakeSession::read('account_name');
+		$account_id = CakeSession::read('account_id');
+
 		//INSERT
 		$this->thread_tb->set(
 				array(
 					'title' => $insert_data['regist_thread_title'],
-					'pass' => $insert_data['regist_thread_text'],
+					'text' => $insert_data['regist_thread_text'],
 					'date' => date('Y-m-d H:i:s'),
-					'account_id' => $insert_data['account_id']
+					'account_id' => $account_id,
+					'author_name' => $account_name
 					)
 		);
 		$this->thread_tb->save();
