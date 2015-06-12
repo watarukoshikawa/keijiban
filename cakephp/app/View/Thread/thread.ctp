@@ -14,7 +14,7 @@
 <?php foreach ($threads as $thread_data): ?>
 	<?php foreach ($thread_data as $thread): ?>
 	<tr>
-		<th> <a href="..//response/show_main?thread_id=<?php echo $thread['id'] ?>"><?php echo $thread['title']; ?></a></th>
+		<th> <a href="..//response/show_main?thread_id=<?php echo $thread['id'] ?>&account_id=<?php echo $account_id ?>"><?php echo $thread['title']; ?></a></th>
 		<th><?php  ?></th>
 		<th><?php echo $thread['date']; ?></th>
 		<th>

@@ -14,12 +14,15 @@ class ThreadController extends AppController{
 	//thread一覧ページ
 	public function thread(){
 
+		$insert_id = $this->request->query;
+		$this->set('account_id',$insert_id['account_id']);
 
 		//DBからスレッド取得
 		$this->loadModel('thread_tb');
 
 		$res = $this->thread_tb->find('all');
 		$this->set('threads', $res);  //$thredsにスレッド一覧を格納
+
 
 		//thread.ctp表示
 		$this->render('thread');
