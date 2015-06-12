@@ -22,8 +22,8 @@
 </style>
 <div id="main_area">
 	<form action="run_login" method="POST" class="text_area">
-		<div class="text_box">ID:<input type="text" name="input_id"></div>
-		<div class="text_box">PASS:<input type="pass" name="input_pass"></div>
-		<input type="submit" id="submit_btn" name="input_login" value="ログイン">
+		<div class="text_box">ID:<input type="text" name="login_id"></div>
+		<div class="text_box">PASS:<input type="pass" name="login_pass"></div>
+		<input type="submit" id="submit_btn" name="login_btn" value="ログイン">
 	</form>
 </div>
