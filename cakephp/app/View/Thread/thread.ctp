@@ -16,9 +16,10 @@
 		<th></th>
 		<th></th>
 		<th>
-			<form action="" method="POST" class="delete_thread_form">
+			<form action="run_thread_delete" method="POST" class="delete_thread_form">
 				<input type="submit" name="delete_btn" value="削除">
-				<input type="hidden" name="delete_id" value="">
+				<input type="hidden" name="delete_thread_id" value="">
+				<input type="hidden" name="account_id" value="">
 			</form>
 		</th>
 	</tr>
