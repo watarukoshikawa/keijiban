@@ -22,9 +22,25 @@ class ThreadController extends AppController{
 		//DBからスレッド取得
 		$this->loadModel('thread_tb');
 
-		$res = $this->thread_tb->find('all');
-		$this->set('threads', $res);  //$thredsにスレッド一覧を格納
+		$sql = 'SELECT
+					thread_tbs.id,
+					thread_tbs.title,
+					thread_tbs.date,
+					thread_tbs.text,
+					account_tbs.name,
+					account_tbs.id
+				FROM
+					`thread_tbs`
+				INNER JOIN
+					`account_tbs`
+				ON
+					account_tbs.id = thread_tbs.account_id
+				ORDER BY
+					thread_tbs.date
+				DESC';
 
+		$res = $this->thread_tb->query($sql);
+		$this->set("threads", $res);
 
 		//thread.ctp表示
 		$this->render('thread');
