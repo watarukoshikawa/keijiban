@@ -1,7 +1,12 @@
 
 <!-- スレッド作成ボタン -->
 <form action="thread_regist" method="POST">
-	<input type="submit" name="" value="スレッド作成">
+	<input type="submit" name="thread_regist_btn" value="スレッド作成">
+</form>
+
+<!-- ログアウトボタン -->
+<form class="logout" action="run_logout" method="post">
+	<input type="submit" name="logout_btn" value="ログアウト">
 </form>
 
 <!-- スレッド一覧表示 -->

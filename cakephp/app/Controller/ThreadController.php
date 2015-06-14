@@ -94,6 +94,15 @@ class ThreadController extends AppController{
 		$this->redirect('thread');
 	}
 
+	//ログアウト処理
+	public function run_logout(){
+
+		CakeSession::delete('account_name');
+		CakeSession::delete('account_id');
+
+		redirect('../account/login');
+
+	}
 
 }
 
