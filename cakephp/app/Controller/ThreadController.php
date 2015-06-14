@@ -60,7 +60,7 @@ class ThreadController extends AppController{
 		$delete_date = $this->request->data;
 
 		//DELETE
-		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_id']));
+		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_thread_id']));
 
 		// 削除後threadにリダイレクト
 		$this->redirect('thread');
@@ -100,7 +100,7 @@ class ThreadController extends AppController{
 		CakeSession::delete('account_name');
 		CakeSession::delete('account_id');
 
-		redirect('../account/login');
+		$this->redirect('../account/login');
 
 	}
 
