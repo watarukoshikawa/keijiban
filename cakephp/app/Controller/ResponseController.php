@@ -83,4 +83,9 @@ class ResponseController extends AppController{
 		$this->redirect('show_main?thread_id='.$where['thread_id'].'');
 
 	}
+	//レス投稿画面、レス一覧に戻る
+	public function return_response(){
+		$this->loadModel('Response_tb');
+		$this->redirect("show_main?thread_id=". $this->request->data['thread_id']);
+	}
 };
