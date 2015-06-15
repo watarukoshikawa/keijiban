@@ -100,7 +100,7 @@ class ThreadController extends AppController{
 		CakeSession::delete('account_name');
 		CakeSession::delete('account_id');
 
-		$this->redirect('../account/login');
+		redirect('../account/login');
 
 	}
 

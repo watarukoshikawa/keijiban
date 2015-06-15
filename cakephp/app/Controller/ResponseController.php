@@ -65,7 +65,7 @@ class ResponseController extends AppController{
 					'account_id' => (int)$where['account_id'],
 					'thread_id' => (int)$where['thread_id']
 				);
-		var_dump($arr);
+
 		$this->Response_tb->set($arr);
 		$this->Response_tb->save();
 		$this->redirect('show_main?thread_id='.$where['thread_id'].'');
