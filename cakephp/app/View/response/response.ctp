@@ -5,7 +5,7 @@
 		margin: 0 auto;
 	}
 	p.title_text{
-		font-size: 30px;
+		font-size: 24px;
 		margin: 0;
 	}
 	div#button_area{
@@ -19,37 +19,45 @@
 		margin-right: -20px;
 	}
 	div.response_box{
-		margin-top: 50px
-		border:solid;
+		margin-top: 10px;
+		height:100px ;
+		border-bottom: solid;
 	}
-	div#response_text{
+	div.response_text{
 		float: left;
-		width: 300px;
+		width: 400px;
 	}
-	div#response_delete{
+	div.response_delete{
 		float: right;
-		width: 150px;
 		margin-bottom: 0;
+	}
+	textarea.response_textarea{
+		overflow: scroll;
+		height: 30px;
+		resize: none;
+		font-size: 100%;
+		border:solid 1px #F0F8FF;
+		margin-left: -5px;
 	}
 </style>
 <div id="main_area">
 	<div id="title_area">
 		<table style="width:500px">
 			<tr>
-				<th style="padding:0; width:120px; ">
+				<td style="padding:0; width:120px; text-align:right;">
 					<p class="title_text">スレタイ：</p>
-				</th>
-				<th>
+				</td>
+				<td>
 					<p class="title_text"><?php echo $table_data[0]['thread_tbs']['title'] ?></p>
-				</th>
+				</td>
 			</tr>
 			<tr>
-				<th style="text-align:right;">
+				<td style="padding:0; width:120px; text-align:right;">
 					<p class="title_text">本文：</p>
-				</th>
-				<th>
+				</td>
+				<td>
 					<p class="title_text"><?php echo $table_data[0]['thread_tbs']['thread_text'] ?></p>
-				</th>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -76,21 +84,21 @@
 			if($data['response_tbs']['response_text']):
 		?>
 				<div class='response_box'>
-					<div id="response_text">
+					<div class="response_text">
 						<table>
 							<tr><th>日付：<?php echo $data['response_tbs']['date']; ?></th></tr>
-							<tr><th style="word-break:break-all;">本文：<?php echo $data['response_tbs']['response_text']; ?></th></tr>
+							<tr><td><textarea class="response_textarea" readonly><?php echo $data['response_tbs']['response_text']; ?> </textarea></td></tr>
 						</table>
 					</div>
 
 			<?php
 				if($account['id'] == $data['account_tbs']['account_id'] && $account['name'] == $data['account_tbs']['name']):
 			?>
-					<div id="response_delete">
+					<div class="response_delete">
 						<form action='run_dalete' method='POST'>
 							<input type="hidden" name="thread_id" value="<?php echo $check_input['thread_id'] ?>">
 							<input type="hidden" name="response_id" value="<?php echo $data['response_tbs']['response_id'] ?>">
-							<input type='submit' name='delete_res' value='削除'>
+							<input type='submit' name='delete_res' value='削除' style="margin-top:60px;">
 						</form>
 					</div>
 			<?php
