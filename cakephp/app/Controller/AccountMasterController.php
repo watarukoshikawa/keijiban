@@ -20,7 +20,7 @@ class AccountmasterController extends AppController {
 			if(count($checker)){
 				CakeSession::write('account_id', $checker['account_tbs']['id']);
 				CakeSession::write('account_name', $checker['account_tbs']['name']);
-				$this->show_account();
+				$this->render('account_master_switch');
 			}else{
 				//login失敗
 				$this->show_main();
