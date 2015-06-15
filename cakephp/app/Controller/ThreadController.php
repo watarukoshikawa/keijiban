@@ -9,7 +9,6 @@ class ThreadController extends AppController{
 	// スレッド登録処理
 	// セッションでページ管理
 
-
 	//thread一覧ページ
 	public function thread(){
 
@@ -18,6 +17,9 @@ class ThreadController extends AppController{
 		$account_id = CakeSession::read('account_id');
 		$this->set('account_name', $account_name);
 		$this->set('account_id', $account_id);
+
+		if ($account_name && $account_id) {
+
 
 		//DBからスレッド取得
 		$this->loadModel('thread_tb');
@@ -44,12 +46,20 @@ class ThreadController extends AppController{
 
 		//thread.ctp表示
 		$this->render('thread');
+
+		}else {
+			$this->redirect('../account/login');
+		}
 	}
 
 	//thread_registページ
 	public function thread_regist(){
-		//thread_regist.ctp表示
-		$this->render('thread_regist');
+		if ($account_name && $account_id) {
+			//thread_regist.ctp表示
+			$this->render('thread_regist');
+		}else {
+			$this->redirect('../account/login');
+		}
 	}
 
 	//スレッド削除処理
