@@ -48,19 +48,51 @@ class AccountmasterController extends AppController {
 		$where = array(
 			'conditions' => array('id' => $this->request->data['regist_id'])
 		);
+		if(count($this->account_tbs->find('first', $where))){
+			$this->set('msg',"すでに使われているIDです");
+			$this->show_regist();
+		}else{
+			$regist_data = array(
+							'id' => $this->request->data['regist_id'],
+							'name' => $this->request->data['regist_name'],
+							'pass' => $this->request->data['regist_pass']
+							);
+			$this->account_tbs->set($regist_data);
+			$this->account_tbs->save();
+			$this->set('msg',"登録しました");
+			$this->show_account();
+		}
 
 	}
 	//削除処理
 	public function run_delete(){
+	
+		$where = array('id' => (int)$this->request->data['delete_id']);
+		$this->loadModel('account_tbs');
+		$this->account_tbs->deleteAll($where);
+
+		$where = array('account_id' => (int)$this->request->data['delete_id']);
+		$this->loadModel('thread_tbs');
+		$this->thread_tbs->deleteAll($where);
+
+		$this->loadModel('response_tbs');
+		$this->response_tbs->deleteAll($where);
+
+		$this->set('msg',"ID:". $this->request->data['delete_id'] . "を削除しました");
+		$this->show_account();
 
 	}
 	//登録画面からaccount一覧へ戻る処理
 	public function return_account(){
+		$this->show_account();
 
 	}
 	//ログアウト処理
 	public function run_logout(){
 
+		CakeSession::delete('account_id');
+		CakeSession::delete('account_name');
+		$this->show_main();
 	}
 
 }

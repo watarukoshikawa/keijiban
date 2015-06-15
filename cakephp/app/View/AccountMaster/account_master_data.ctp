@@ -1,4 +1,7 @@
 <div id="main_area">
+	<div>
+		<p><?php echo $res = isset($msg) && $msg != "" ? $msg : "" ; ?></p>
+	</div>
 	<div id="button_area">
 		<div id="regist_area">
 			<form action="show_regist" method="POST">
@@ -6,8 +9,8 @@
 			</form>
 		</div>
 		<div id="return_area">
-			<form action="return_account" method="POST">
-				<input type="submit" name="return_account" value="戻る">
+			<form action="run_logout" method="POST">
+				<input type="submit" name="run_logout" value="ログアウト">
 			</form>
 		</div>
 	</div>
