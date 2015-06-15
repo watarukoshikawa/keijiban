@@ -7,39 +7,6 @@ class ResponseController extends AppController{
 	public function show_main(){
 		$this->loadModel('Response_tb');
 		$get_id = $this->params['url'];
-<<<<<<< HEAD
-=======
-		var_dump($get_id);
-		$sql = "
-					SELECT
-						account_tbs.name ,
-						get_thread.response_id ,
-						get_thread.response_text ,
-						get_thread.response_date ,
-						get_thread.account_id ,
-						get_thread.thread_title ,
-						get_thread.thread_text
-					FROM
-						`account_tbs`
-					INNER JOIN
-						(SELECT
-							response_tbs.id AS response_id ,
-							response_tbs.text AS response_text ,
-							response_tbs.date AS response_date ,
-							response_tbs.account_id ,
-							thread_tbs.title AS thread_title ,
-							thread_tbs.text AS thread_text
-						FROM `response_tbs`
-						INNER JOIN
-							thread_tbs
-						ON
-							thread_tbs.id = response_tbs.thread_id
-						WHERE thread_id = ".$get_id['thread_id'].") AS get_thread
-					ON
-						get_thread.account_id = account_tbs.id
-					ORDER BY response_date ASC
-				";
->>>>>>> response 初の画面表示データ取得から表示まで
 
 		$check_account = array(
 							"name" => CakeSession::read('account_name'),
