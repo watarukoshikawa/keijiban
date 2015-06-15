@@ -26,8 +26,8 @@
 
 		<?php if ($account_id == $thread['account_tbs']['id'] && $account_name == $thread['account_tbs']['name']): ?>
 			<form action="run_thread_delete" method="POST" class="delete_thread_form">
-				<input type="hidden" name="delete_thread_id" value="<?php echo $thread['thread_tbs']['id']; ?>">
 				<input type="submit" name="delete_btn" value="削除">
+				<input type="hidden" name="delete_thread_id" value="<?php echo $thread['thread_tbs']['id']; ?>">
 			</form>
 		<?php endif; ?>
 		</th>
