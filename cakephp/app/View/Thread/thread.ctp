@@ -32,6 +32,30 @@
 			</form>
 		</div>
 	</div>
+
+	<!-- 検索機能 -->
+	<form class="search_form" action="run_thread_search" method="POST">
+		<table>
+			<tr>
+				<th>
+					スレッドタイトル <input type="text" name="search_title" value="">
+				</th>
+				<th>
+					作成者 <input type="text" name="search_name" value="">
+				</th>
+				<th>
+					日付 <input type="datetime" name="search_date_from" value="2010/01/01 00:00" required>
+					～ <input type="datetime" name="search_date_to" value="2030/01/01 00:00" required>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<input type="submit" name="search_btn" value="検索">
+				</th>
+			</tr>
+		</table>
+	</form>
+
 	<!-- スレッド一覧表示 -->
 	<table>
 		<tr>

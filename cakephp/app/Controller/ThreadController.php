@@ -18,34 +18,33 @@ class ThreadController extends AppController{
 		$this->set('account_name', $account_name);
 		$this->set('account_id', $account_id);
 
+		//セッションがあるかチェック
 		if ($account_name && $account_id) {
 
+			$this->loadModel('thread_tb');
 
-		//DBからスレッド取得
-		$this->loadModel('thread_tb');
+			$sql = 'SELECT
+						thread_tbs.id,
+						thread_tbs.title,
+						thread_tbs.date,
+						thread_tbs.text,
+						account_tbs.name,
+						account_tbs.id
+					FROM
+						`thread_tbs`
+					INNER JOIN
+						`account_tbs`
+					ON
+						account_tbs.id = thread_tbs.account_id
+					ORDER BY
+						thread_tbs.date
+					DESC';
 
-		$sql = 'SELECT
-					thread_tbs.id,
-					thread_tbs.title,
-					thread_tbs.date,
-					thread_tbs.text,
-					account_tbs.name,
-					account_tbs.id
-				FROM
-					`thread_tbs`
-				INNER JOIN
-					`account_tbs`
-				ON
-					account_tbs.id = thread_tbs.account_id
-				ORDER BY
-					thread_tbs.date
-				DESC';
+			$res = $this->thread_tb->query($sql);
+			$this->set("threads", $res);
 
-		$res = $this->thread_tb->query($sql);
-		$this->set("threads", $res);
-
-		//thread.ctp表示
-		$this->render('thread');
+			//thread.ctp表示
+			$this->render('thread');
 
 		}else {
 			$this->redirect('../account/login');
@@ -114,6 +113,65 @@ class ThreadController extends AppController{
 
 		$this->redirect('../account/login');
 
+	}
+
+	public function run_thread_search(){
+
+		$account_name = CakeSession::read('account_name');
+		$account_id = CakeSession::read('account_id');
+		$this->set('account_name', $account_name);
+		$this->set('account_id', $account_id);
+
+		$this->loadModel('thread_tb');
+		$search_data = $this->request->data;
+
+		$sql = 'SELECT
+					thread_tbs.id,
+					thread_tbs.title,
+					thread_tbs.date,
+					thread_tbs.text,
+					account_tbs.name,
+					account_tbs.id
+				FROM
+					`thread_tbs`
+				INNER JOIN
+					`account_tbs`
+				ON
+					account_tbs.id = thread_tbs.account_id
+				';
+
+		if (isset($search_data['search_title']) || isset($search_data['search_name']) || isset($search_data['search_date_from']) || isset($search_data['search_date_to'])){
+			if ($search_data['search_title'] != "" || $search_data['search_name'] != "" || $search_data['search_date_from'] != "" || $search_data['search_date_to'] != "") {
+				$sql .= 'WHERE ';
+				$and = 0;
+				if ($search_data['search_title'] != "") {
+					$sql .= 'thread_tbs.title LIKE "%'.$search_data['search_title'].'%"';
+					$and = 1;
+				}
+				if ($search_data['search_name'] != "") {
+					if ($and == 1) {
+						$sql .= 'AND ';
+					}
+					$sql .= 'account_tbs.name LIKE "%'.$search_data['search_name'].'%"';
+					$and = 1;
+				}
+				if ($search_data['search_date_from'] != "" && $search_data['search_date_to'] != "") {
+					if ($and == 1) {
+						$sql .= 'AND ';
+					}
+					$sql .= 'thread_tbs.date BETWEEN "'.$search_data['search_date_from'].'" AND "'.$search_data['search_date_to'].'"';
+				}
+			}
+		}
+
+		$sql .=	'ORDER BY
+					thread_tbs.date
+				DESC';
+
+		$res = $this->thread_tb->query($sql);
+		$this->set("threads", $res);
+
+		$this->render('thread');
 	}
 
 }
