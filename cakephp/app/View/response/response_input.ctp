@@ -12,7 +12,8 @@
 </style>
 <div id="main_area">
 	<div id="return_response">
-		<form>
+		<form action="return_response" method="POST">
+			<input type="hidden" name="thread_id" value="<?php echo $check_input['thread_id'] ?>"> 
 			<input type="submit" name="return_response" value="戻る">
 		</form>
 	</div>
@@ -20,7 +21,7 @@
 		<form action="run_input" method="POST">
 			<input type="hidden" name="account_id" value="<?php echo $check_input['account_id'] ?>">
 			<input type="hidden" name="thread_id" value="<?php echo $check_input['thread_id'] ?>"> 
-			<p>レス：<input type="text" name="input_response"></p>
+			<p>レス：<textarea type="text" cols="20" rows="5" name="input_response"></textarea></p>
 			<input type="submit" name="input_res_btn" value="投稿">
 		</form>
 	</div>
