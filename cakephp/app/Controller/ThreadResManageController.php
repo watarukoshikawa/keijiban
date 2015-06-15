@@ -31,7 +31,10 @@ class ThreadResManageController extends AppController{
 		$this->set('number_of_thread',$res);
 
 		// レスの件数取得
+		$this->loadModel('response_tb');
 
+		$res = $this->response_tb->find('count', $where);
+		$this->set('number_of_response', $res);
 
 		//aggregation.ctp描写
 		$this->render('aggregation');
@@ -40,6 +43,40 @@ class ThreadResManageController extends AppController{
 	//manage.ctpのshow
 	public function manage(){
 
+		//GETデータ取得&変数に保持
+		$aggregation_data = $this->request->query;
+		$this->set('aggregation_data', $aggregation_data);
+
+		//スレッド一覧取得
+		$this->loadModel('thread_tb');
+
+		$where = array(
+				'conditions' => array(
+							'date BETWEEN ? AND ?' => array(
+													$aggregation_data['from'],
+													$aggregation_data['to']
+													)
+							),
+				'order' =>  'date ASC'
+				);
+		$res = $this->thread_tb->find('all', $where);
+		$this->set('threads', $res);
+
+		// スレッドのレス件数取得
+		$this->loadModel('response_tb');
+
+
+		// $where = array(
+		// 		'conditions' => array(
+		// 					'date BETWEEN ? AND ?' => array(
+		// 											$aggregation_data['from'],
+		// 											$aggregation_data['to']
+		// 										)
+		// 						),
+		// 		'conditions' => array('thread_id' =>  )
+		// 		);
+		// $res = $this->response_tb->find('count',$where);
+		// $this->set('number_of_response', $res);
 	}
 
 }
