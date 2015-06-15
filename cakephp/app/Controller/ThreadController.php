@@ -54,6 +54,8 @@ class ThreadController extends AppController{
 
 	//thread_registページ
 	public function thread_regist(){
+		$account_name = CakeSession::read('account_name');
+		$account_id = CakeSession::read('account_id');
 		if ($account_name && $account_id) {
 			//thread_regist.ctp表示
 			$this->render('thread_regist');
@@ -70,7 +72,7 @@ class ThreadController extends AppController{
 		$delete_date = $this->request->data;
 
 		//DELETE
-		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_id']));
+		$this->thread_tb->deleteAll(array('id' => $delete_date['delete_thread_id']));
 
 		// 削除後threadにリダイレクト
 		$this->redirect('thread');

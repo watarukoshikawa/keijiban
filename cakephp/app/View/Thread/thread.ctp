@@ -41,13 +41,14 @@
 	<!-- foreachでユーザーデータ表示 -->
 	<?php foreach ($threads as $thread): ?>
 		<tr>
-			<th> <a href="..//response/show_main?thread_id=<?php echo $thread['thread_tbs']['id'] ?>"><?php echo $thread['thread_tbs']['title']; ?></a></th>
+			<th> <a href="../response/show_main?thread_id=<?php echo $thread['thread_tbs']['id'] ?>"><?php echo $thread['thread_tbs']['title']; ?></a></th>
 			<th><?php echo $thread['account_tbs']['name']; ?></th>
 			<th><?php echo $thread['thread_tbs']['date']; ?></th>
-			<th>
 				<!-- ログインidと投稿者が一致すれば削除ボタンを表示する予定 -->
 
-			<?php if ($account_id == $thread['account_tbs']['id'] && $account_name == $thread['account_tbs']['name']): ?>
+			<th>
+			<?php if ($account_id == $thread['account_tbs']['id'] && $account_name == $thread['account_tbs']['name']):
+				?>
 				<form action="run_thread_delete" method="POST" class="delete_thread_form">
 					<input type="submit" name="delete_btn" value="削除">
 					<input type="hidden" name="delete_thread_id" value="<?php echo $thread['thread_tbs']['id']; ?>">
