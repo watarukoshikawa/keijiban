@@ -47,36 +47,41 @@ class ThreadResManageController extends AppController{
 		$aggregation_data = $this->request->query;
 		$this->set('aggregation_data', $aggregation_data);
 
-		//スレッド一覧取得
 		$this->loadModel('thread_tb');
-
-		$where = array(
-				'conditions' => array(
-							'date BETWEEN ? AND ?' => array(
-													$aggregation_data['from'],
-													$aggregation_data['to']
-													)
-							),
-				'order' =>  'date ASC'
-				);
-		$res = $this->thread_tb->find('all', $where);
-		$this->set('threads', $res);
-
-		// スレッドのレス件数取得
 		$this->loadModel('response_tb');
 
+		$sql = "SELECT
+					thread_tbs.date,
+					thread_tbs.title,
+					res_tb.thread_id,
+					res_tb.res_count
+				FROM
+					thread_tbs
+				LEFT JOIN
+					(SELECT
+					    COUNT(response_tbs.thread_id) AS res_count,
+				        response_tbs.thread_id AS thread_id
+			        FROM
+			            response_tbs
+					WHERE
+						response_tbs.date
+						BETWEEN '".$aggregation_data['from']."' AND '".$aggregation_data['to']."'
+			        GROUP BY
+			            thread_id
+					)
+					AS res_tb
+				ON
+					thread_tbs.id = res_tb.thread_id
+				WHERE
+					thread_tbs.date
+					BETWEEN '".$aggregation_data['from']."' AND '".$aggregation_data['to']."'
+				ORDER BY
+					thread_tbs.date
+				ASC
+				";
 
-		// $where = array(
-		// 		'conditions' => array(
-		// 					'date BETWEEN ? AND ?' => array(
-		// 											$aggregation_data['from'],
-		// 											$aggregation_data['to']
-		// 										)
-		// 						),
-		// 		'conditions' => array('thread_id' =>  )
-		// 		);
-		// $res = $this->response_tb->find('count',$where);
-		// $this->set('number_of_response', $res);
+		$res = $this->thread_tb->query($sql);
+		$this->set('threads', $res);
 	}
 
 }
