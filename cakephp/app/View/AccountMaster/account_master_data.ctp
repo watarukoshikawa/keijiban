@@ -1,3 +1,17 @@
+<style type="text/css">
+	div#main_area{
+		width: 500px;
+		margin: 0 auto;
+	}
+	div#regist_area{
+		float: left;
+	}
+	div#return_area{
+		float: right;
+		margin-right: -20px;
+	}
+
+</style>
 <div id="main_area">
 	<div>
 		<p><?php echo $res = isset($msg) && $msg != "" ? $msg : "" ; ?></p>
@@ -19,13 +33,13 @@
 			<tr>
 				<th>id</th>
 				<th>name</th>
-				<th>削除</th>
+				<th width="50px" style="text-align:center;">削除</th>
 			</tr>
 	<?php foreach ($table_data as $data): ?>
 			<tr>
 				<td><?php echo $data['account_tbs']['id'] ?></td>
 				<td><?php echo $data['account_tbs']['name'] ?></td>
-				<td>
+				<td style="text-align:center;">
 					<form action="run_delete" method="POST">
 						<input type="hidden" name="delete_id" value="<?php echo $data['account_tbs']['id'] ?>">
 						<input type="submit" name="run_delete" value="削除">
@@ -37,7 +51,3 @@
 		</table>
 	</div>
 </div>
-
-<pre>
-	<?php var_dump($table_data); ?>
-</pre>
